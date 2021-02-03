@@ -1,0 +1,16 @@
+node_modules/
+.env
+
+# for public directory
+/templates
+/routes/auth.js
+/controllers/auth.js
+/model/user.js
+
+.dockerignore
+docker-compose.yaml
+Dockerfile
+Procfile
+
+package-lock.json
+package.json

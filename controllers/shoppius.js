@@ -34,7 +34,7 @@ const getCart = async (req, res, next) => {
 ////////////////////////////
 //Helper methods
 ////////////////////////////
-const calculateTotalHelper = (cart) => {
+const calculateTotalHelperX = (cart) => {
 	let totalSum = 0;
 	cart.items.forEach((item) => {
 		//find "raw" total for item in the cart 
@@ -47,6 +47,25 @@ const calculateTotalHelper = (cart) => {
 		}
 		totalSum += tempTotal;
 	});
+	return totalSum;
+};
+
+const calculateTotalHelper = (cart) => {
+	let totalSum = 0;
+	cart.items.forEach((item) => {
+		itemSum = 0;
+		let validForDiscount;
+		if (item.qtyForDiscount !== 0 && item.qtyForDiscount > 0) {
+			validForDiscount = Math.floor(item.quantity/item.qtyForDiscount); // (4/3  = 1), (1/3 = 0)
+			console.log("valid for discount = ", validForDiscount)
+		}else{
+			validForDiscount = 0;
+		}
+		itemSum = ((validForDiscount*item.discountValue) + ( (item.quantity - (validForDiscount * item.qtyForDiscount)) * item.price));
+		totalSum += itemSum;
+		console.log("item sum = ", itemSum)
+	}); 
+	console.log("total sum = ", totalSum)
 	return totalSum;
 };
 
